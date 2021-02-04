@@ -1,1 +1,1 @@
-web: python __init__.py
+web: app.py
