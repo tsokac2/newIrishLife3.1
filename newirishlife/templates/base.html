@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+        <title>New Irish Life  {{title}}</title>
+    {% endif %}
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}"/>
+    <meta name="description" content="Web-based travel guide for providing correct information how easily start living and working in Ireland">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merienda:wght@400;700&display=swap" rel="stylesheet"> 
+    <script src="https://kit.fontawesome.com/c8a0926547.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" type="text/css">
+    <script type="text/javascript"src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <script src="{{ url_for('static', filename='libraries/scripts/emailjs.js') }}"></script>
+
+</head>
+<body>
+<div class="blur"></div>
+<!-- {% with messages = get_flashed_messages(category_filter=["success"]) %}
+{% if messages %}
+    {% for message in messages %}
+        <h1 class="alert alert-{{ category }}">
+            {{ message | safe }}
+        </h1>
+    {% endfor %}
+{% endif %}
+{% endwith %} -->
+<nav class="container-fluid fixed-top d-none d-lg-block">
+    <div class="row justify-content-center">
+        <div class="col main-nav-wrap">
+            <div class="row justify-content-center text-center">
+                <div class="col text-center left">
+                    <div class="row justify-content-center">
+                        <a class="text-decoration-none  left-wrap border-right" href="{{ url_for('home')}}">HOME</a>
+                        <a class="text-decoration-none  left-wrap border-right" href="{{ url_for('trip')}}">TRIP</a>
+                        <a class="text-decoration-none  left-wrap border-right" href="{{ url_for('work')}}">WORK</a>
+                        <a class="text-decoration-none  left-wrap border-right " href="{{ url_for('life')}}">LIFE</a>
+                        <a class="text-decoration-none  left-wrap l-w" href="{{ url_for('tips')}}">TIPS</a>
+                    </div>
+                </div>
+                <div class="col-3 mt-4">
+                    <a href="{{ url_for('home')}}"><img src="{{ url_for('static', filename='images/Logo.png')}}" width="100" alt="New Irish Logo"></a>
+                </div>
+                <div class="col right">
+                    <div class="row justify-content-between">
+                        <div class="col-6 text-left search-wrap">
+                            <form onsubmit="return false;">
+                                <span><i class="fas fa-search"></i></span>
+                                <input type="search" id="search" placeholder="Search">
+                            </form>
+                        </div>
+                        <div class="col-6 text-left side-btns p-0">
+                            <a href="{{ url_for('registration')}}"><i class="fas fa-user-plus"></i>Sing Up</a>
+                            <a href="{{ url_for('login')}}"><i class="fas fa-sign-in-alt"></i>Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row quote-borders p-2 mtt"></div>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid d-lg-none fixed-top">
+    <div class="row justify-content-center mobile-nav-wrap">
+        <div class="col">
+            <div class="row justify-content-center">
+                <div class="col-6 text-center">
+                    <a href="{{ url_for('home')}}">
+                        <img class="img-fluid" src="{{ url_for('static', filename='images/Logo.png')}}" width="80" alt="New Irish Logo">
+                    </a>
+                </div>
+                <div class="col-12 mtt">
+                    <div class="row justify-content-center footer-line">
+                        <div class="col-4 l"></div>
+                        <div class="col-2 g"></div>
+                        <div class="col-4 l"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row justify-content-center">
+                <div class="col-8 col-sm-6 mobile-nav-search">
+                    <form>
+                        <span><i class="fas fa-search"></i></span>
+                        <input type="search" name="search" id="search" placeholder="Search">  
+                    </form>
+                </div>
+                
+                <div class="col-4 p-0 menu-btn-wrap">
+                    <button data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span> MENU 
+                </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row quote-borders p-2"></div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light nav-padding d-lg-none">
+    <div class="collapse navbar-collapse mt-4" id="navbarSupportedContent">
+        <div class="nav-mobile">
+            <div class="wrap">
+                <a href="{{ url_for('home')}}" class="link">
+                    <span class="icons home"></span>
+                    <span>Home</span>
+                </a>
+            </div>
+            <div class="wrap">
+                <a href="{{ url_for('trip')}}" class="link">
+                    <span class="icons trip"></span>
+                    <span>Trip</span>
+                </a>
+            </div>
+            <div class="wrap">
+                <a href="{{ url_for('work')}}" class="link">
+                    <span class="icons work"></span>
+                    <span>Work</span>
+                </a>
+            </div>
+            <div class="wrap">
+                <a href="{{ url_for('life')}}" class="link">
+                    <span class="icons life"></span>
+                    <span>Life</span>
+                </a>
+            </div>
+            <div class="wrap">
+                <a href="{{ url_for('tips')}}" class="link">
+                    <span class="icons tips"></span>
+                    <span>TIPS</span>
+                </a>
+            </div>
+            <div class="wrap">
+                <a href="{{ url_for('login')}}" class="link">
+                    <span class="icons login"></span>
+                    <span>Login</span>
+                </a>
+            </div>
+            <div class="wrap wrap--s">
+                <a href="{{ url_for('registration')}}" class="link">
+                    <span class="icons sing-up"></span>
+                    <span>Sing Up</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% block content %}
+{% endblock %}
+<footer class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="row justify-content-center footer-line">
+                <div class="col-4 l"></div>
+                <div class="col-2 g"></div>
+                <div class="col-4 l"></div>
+            </div>
+        </div>
+        <div class="col-12 text-center info">
+            <ul class="link-wrap">
+                <li class="r"><a class="text-decoration-none flex-link" href="{{ url_for('home')}}">HOME</a> </li>
+                <li class="r"><a class="text-decoration-none flex-link" href="{{ url_for('trip')}}">TRIP</a></li>
+                <li><a class="text-decoration-none flex-link" href="{{ url_for('work')}}">WORK</a></li>
+                <li class="l"><a class="text-decoration-none flex-link " href="{{ url_for('life')}}">LIFE</a></li>
+                <li class="l"><a class="text-decoration-none flex-link l-w" href="{{ url_for('tips')}}">TIPS</a></li>
+            </ul>
+        </div>
+        <div class="col-10 col-md-8 col-lg-7 text-center news">
+            <h2>Get monthly updates and free resources!</h2>
+            <form id="newsForm" class="form">
+                <div class="row justify-content-center m-0">
+                    <div class="col-12 col-sm-10 col-md-8 mt-input">
+                        <div class="form-group">
+                            <input type="text" placeholder="Enter your name *" id="newsName" />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-10 col-md-8 mt-email-input">
+                        <div class="form-group">
+                            <input type="email" placeholder="Enter your email address *" id="newsEmail" />
+                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-exclamation-circle"></i>
+                            <small>Error message</small>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-10 col-md-8 ">
+                        <div class="form-group">
+                            <button id="newsSent" class="news-btn">Submit</button>
+                            <h4 id="tnx" class="sub-success"></h4>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-10 col-md-8 col-lg-7">
+            <div class="row justify-content-center social pb-4">
+                <div class="col-12">
+                    <h2 class="mission-h2  text-center">SHARE OUR MISSION</h2>
+                </div>
+                <div class="social-wrap">
+                    <a href="https://www.instagram.com" class="social-link" target="_blank"><i
+                            class="fab fa-instagram"></i></a>
+                </div>
+                <div class="social-wrap">
+                    <a href="https://twitter.com/?lang=en" class="social-link" target="_blank"><i
+                            class="fab fa-twitter"></i></a>
+                </div>
+                <div class="social-wrap">
+                    <a href="https://www.facebook.com/" class="social-link" target="_blank"><i
+                            class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="social-wrap">
+                    <a href="https://www.pinterest.ie/" class="social-link" target="_blank"><i
+                            class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row justify-content-center ">
+                <div class="col-12 col-sm-6 text-center copy-ts">
+                    <p><strong>&#169; NewIrishLife 2020</strong> | All rights reserved</p>
+                </div>
+                <div class="col-12 col-sm-6 text-center copy-ts">
+                    <p>Design by <a href="http://www.tomislavsokac.com/home"
+                            target="_blank"><strong>www.tomislavsokac.com</strong></a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='libraries/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cards.js') }}" ></script>
+
+<script src="{{ url_for('static',filename='js/emailnews.js') }}"></script>
+</body>
+</html>
