@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_pymongo import PyMongo
+from newirishlife import app
 if os.path.exists("env.py"):
     import env
 
@@ -12,7 +13,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
-from newirishlife import app
+
 from newirishlife import routes
 
 if __name__ == "__main__":
